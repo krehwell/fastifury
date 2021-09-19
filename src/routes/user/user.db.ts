@@ -1,6 +1,7 @@
 import { PostgresDb } from "fastify-postgres";
 import { create_update_schema } from "../../utils/db.utils";
-import { TUser, OUser, TUserPublicDataOpt } from "./user.interface";
+import { TUser, TUserPublicDataOpt } from "./user.interface";
+import SQL from "sql-template-strings";
 
 /////
 /// DATA ACCESS LAYER - USER
@@ -10,21 +11,25 @@ export const user_db = async (db: PostgresDb) => {
     const client = await db.connect();
 
     const getAllUsers = async (): Promise<TUser[]> => {
-        const users = await client.query("SELECT id, name, email, created FROM usertable");
+        const users = await client.query(SQL`SELECT id, name, email, created FROM usertable`);
 
         return users.rows as TUser[];
     };
 
     const getUserById = async (id: string): Promise<TUser> => {
-        const user = await client.query("SELECT * FROM usertable WHERE id=($1)", [id]);
+        const user = await client.query(SQL`SELECT * FROM usertable WHERE id=${id}`);
         return user.rows[0] as TUser;
     };
 
     const createUser = async (new_user: TUser): Promise<TUser> => {
         const { id, name, email, created } = new_user;
         const result = await client.query(
-            "INSERT INTO USERTABLE (id, name, email, created) VALUES ($1, $2, $3, $4) RETURNING *",
-            [id, name, email, created]
+            SQL`
+            INSERT
+            INTO        USERTABLE
+                        (id, name, email, created)
+            VALUES      (${id}, ${name}, ${email}, ${created})
+            RETURNING   *`
         );
 
         return result.rows[0] as TUser;
@@ -40,7 +45,11 @@ export const user_db = async (db: PostgresDb) => {
     };
 
     const deleteUser = async (userId: string) => {
-        const result = await client.query("DELETE FROM usertable WHERE id = $1 RETURNING *", [userId]);
+        const result = await client.query(SQL`
+                                          DELETE
+                                          FROM      usertable
+                                          WHERE     id = ${userId}
+                                          RETURNING *`);
 
         return result.rows[0];
     };

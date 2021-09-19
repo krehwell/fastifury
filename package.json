@@ -25,7 +25,8 @@
         "fastify-sensible": "^3.1.0",
         "fastify-swagger": "^4.11.0",
         "nanoid": "^3.1.25",
-        "pg": "^8.7.1"
+        "pg": "^8.7.1",
+        "sql-template-strings": "^2.2.2"
     },
     "devDependencies": {
         "@types/node": "^15.0.0",
