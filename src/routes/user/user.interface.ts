@@ -9,6 +9,7 @@ export const OUser = Type.Object(
     },
     { $id: "user" }
 );
+export const OUsers = Type.Array(OUser);
 export type TUser = Static<typeof OUser>;
 
 export const ORequestParams = Type.Object({

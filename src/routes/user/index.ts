@@ -9,6 +9,7 @@ import {
     OUserPublicDataOpt,
     ORequestParams,
     TRequestParams,
+    OUsers,
 } from "./user.interface";
 import { user_db } from "./user.db";
 import "fastify-swagger";
@@ -28,10 +29,7 @@ const __user: FastifyPluginAsync = async (fastify, _opts): Promise<void> => {
             summary: "Get all users",
             tags: ["user"],
             response: {
-                200: {
-                    type: "array",
-                    users: OUser,
-                },
+                200: OUsers,
             },
         },
         handler: async (_req, reply) => {
