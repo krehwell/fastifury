@@ -66,4 +66,5 @@ test/types/index.js
 dist
 
 # environment var
+.env
 package-lock.json
