@@ -6,6 +6,6 @@ import fastifyPostgres, { PostgresPluginOptions } from "fastify-postgres";
  */
 export default fp<PostgresPluginOptions>(async (fastify, _opts) => {
     fastify.register(fastifyPostgres, {
-        connectionString: "postgres://ubcuvgty:OY5h-jK4DeRO6zmi0lhWb0G73IdfuvPE@satao.db.elephantsql.com/ubcuvgty",
+        connectionString: fastify.config.DB_URI,
     });
 });

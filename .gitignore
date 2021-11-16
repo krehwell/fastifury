@@ -44,6 +44,7 @@ profile-*
 
 # vim swap files
 *.swp
+.vim
 
 # webstorm
 .idea
@@ -64,4 +65,5 @@ test/types/index.js
 # compiled app
 dist
 
+# environment var
 package-lock.json
